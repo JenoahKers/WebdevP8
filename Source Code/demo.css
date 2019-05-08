@@ -1,0 +1,75 @@
+body{
+    margin: 0;
+    font-family: 'Roboto', Tahoma, sans-serif;
+}
+.navigation{
+    height: 10%;
+    width: 100%;
+    background-color: #3498db;
+    text-align: center;
+    color: #fff;
+    box-sizing: border-box;
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    box-shadow: 0 3px 0 #2980b9;
+}
+.navigation .logo{
+    height: 80%;
+    position: relative;
+    left: 2%;
+}
+.navigation .title{
+    justify-content: center;
+    margin: auto;
+}
+.navigation h1{
+    margin: 0;
+    font-weight: 400;
+}
+.content{
+    margin: 2%;
+    background-color: #ecf0f1;
+    min-height: 600px;
+    width: 55%;
+    padding: 2%;
+    box-sizing: border-box;
+    word-break: break-all;
+}
+.content p{
+    background: red;
+    background: -webkit-linear-gradient(right, orange , #d8bf00, green, #00c4ff, blue, violet);
+    background: -o-linear-gradient(right, orange , #d8bf00, green, #00c4ff, blue, violet);
+    background: -moz-linear-gradient(right, orange , #d8bf00, green, #00c4ff, blue, violet);
+    background: linear-gradient(right, orange , #d8bf00, green, #00c4ff, blue, violet);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.banner{
+    text-align: center;
+    box-sizing: border-box;
+    padding: 1%;
+    background-color: #e74c3c;
+    color: #fff;
+    overflow: auto;
+}
+.verticalad{
+    height: 600px;
+    width: 300px;
+    float: right;
+    margin: 2%;
+    color: #4d4d4d;
+    background-image: url("https://media.giphy.com/media/5zoHq9FHG1wGsKTem8/source.gif");
+    background-size: cover;
+    background-position: center;
+}
+.horizontalad{
+    height: 120px;
+    width: 600px;
+    position: relative;
+    margin-left: 2%;
+    bottom: 0px;
+    background-image: url("https://media.giphy.com/media/SiNGhMu9W4180gvZk5/source.gif");
+    background-size: cover;
+    background-position: center;
+}
