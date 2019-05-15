@@ -2,36 +2,31 @@ function startGame() {
     myGameArea.start();
 }
 
-var bookIcon = new Image();
-
-window.onload = function(){
-    
-    bookIcon.src = "Yellow-page.png";
-    bookIcon.width = 75;
-    bookIcon.height = 37.5;
-}
-
-var clickedInCanvas = 0;
+var hasStarted = 0;
+var isInCanvas = 0;
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
+    bookIcon: new Image(60, 30),
     start : function(){
         this.canvas.width = 200;
         this.canvas.height = 400;
-        this.canvas.onmousemove = setPlayerPosition(event);
+        this.canvas.onmousemove = function(){ setPlayerPosition(event)};
         this.canvas.onmousedown = function(){ PlayGame()};
         this.context = this.canvas.getContext("2d");
-        var img = document.getElementById("book");
-        img.width = 75;
-        img.height = 37.5;
-        this.context.drawImage(bookIcon, 0, 0);
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        myGameArea.bookIcon.onload = function(){
+            myGameArea.context.drawImage(myGameArea.bookIcon, player.x-myGameArea.bookIcon.width/2, player.y, 60, 30);
+        }
+        document.getElementById("advert").insertBefore(this.canvas, document.getElementById("advert").childNodes[0]);
+
+        this.bookIcon.src = "Yellow-page.png";
         draw();
+
     }
 }
 
 function PlayGame(){
-    clickedInCanvas = 2;
+    hasStarted = 2;
 }
 
 var player = {
@@ -41,7 +36,7 @@ var player = {
 };
 
 function setPlayerPosition(e) {
-    if(clickedInCanvas == 2){
+    if(hasStarted == 2){
         player.x = getMousePos(this.canvas, e).x;
     }
 }
@@ -56,12 +51,7 @@ function draw(){
     var x = player.x;
     var y = player.y;
 
-    myGameArea.context.beginPath();
-    myGameArea.context.moveTo(x,y);
-    myGameArea.context.lineTo(x+15, y+50);
-    myGameArea.context.lineTo(x-15, y+50);
-    myGameArea.context.fill();
-    myGameArea.context.drawImage(bookIcon, 0, 0);
+    myGameArea.context.drawImage(myGameArea.bookIcon, x-myGameArea.bookIcon.width/2, y, 60, 30);
 }
 
 function getMousePos(canvas, evt) {
@@ -73,8 +63,7 @@ function getMousePos(canvas, evt) {
 }
 
 function update(){
-    console.log(clickedInCanvas);
-    if(clickedInCanvas == 2){
+    if(hasStarted == 2){
         clearCanvas();
         draw();
     }

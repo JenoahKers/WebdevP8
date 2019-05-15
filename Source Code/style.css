@@ -1,7 +1,15 @@
+body{
+    width: 100%;
+}
 canvas {
-    border: 1px solid #d3d3d3;
+    background-image: url(Art/achtergrond%201.png);
+    border: 2px solid black;
     background-color: #f1f1f1;
 }
 canvas:hover{
     cursor: none;
+}
+#advert{
+    width: 200px;
+    margin: 0 auto;
 }
