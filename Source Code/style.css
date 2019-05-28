@@ -1,5 +1,6 @@
 body{
     width: 100%;
+    margin: 0;
 }
 canvas {
     background-image: url(Art/achtergrond%201.png);

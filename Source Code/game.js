@@ -3,7 +3,8 @@ function startGame() {
 }
 
 var hasStarted = 0;
-var isInCanvas = 0;
+
+var canAnimate = false;
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
@@ -22,11 +23,17 @@ var myGameArea = {
         this.bookIcon.src = "Yellow-page.png";
         draw();
 
+
     }
 }
 
 function PlayGame(){
-    hasStarted = 2;
+    if(canAnimate == false){
+        hasStarted = 2;
+        animate(); 
+        canAnimate = true;
+    }
+
 }
 
 var player = {
@@ -35,6 +42,58 @@ var player = {
     speed: 20
 };
 
+var spawnLineY = -5;
+var spawnRate = 1000;
+var spawnRateOfDescent = 4.50;
+var lastSpawn = -1;
+var objects = [];
+var startTime = Date.now();
+
+function spawnRandomObject() {
+    var t;
+    if (Math.random() < 0.50) {
+        t = "red";
+    } else {
+        t = "blue";
+    }
+    var object = {
+        type: t,
+        x: Math.random() * (myGameArea.canvas.width - 30) + 15,
+        y: spawnLineY,
+    }
+    objects.push(object);
+}
+
+function animate() {
+    var time = Date.now();
+    if (time > (lastSpawn + spawnRate)) {
+        lastSpawn = time;
+        spawnRandomObject();
+    }
+    requestAnimationFrame(animate);
+    myGameArea.context.beginPath();
+
+    for (var i = 0; i < objects.length; i++) {
+        var object = objects[i];
+        object.y += spawnRateOfDescent;
+        myGameArea.context.beginPath();
+        myGameArea.context.arc(object.x, object.y, 8, 0, Math.PI * 2);
+        myGameArea.context.closePath();
+        myGameArea.context.fillStyle = object.type;
+        myGameArea.context.fill();
+        if(object.y > 215 && object.y < 275){
+            if(object.x > player.x - 35 && object.x < player.x + 35){
+                //console.log("x is same as player");
+                objects.shift();
+            }
+            //console.log("y is same as player");
+        }
+        else if(object.y > 400){
+            objects.shift();
+        }
+    }
+
+}
 function setPlayerPosition(e) {
     if(hasStarted == 2){
         player.x = getMousePos(this.canvas, e).x;
@@ -44,14 +103,14 @@ function setPlayerPosition(e) {
 function clearCanvas() {
     myGameArea.context.clearRect(0,0, myGameArea.canvas.width, myGameArea.canvas.height);
 }
-
 window.addEventListener("mousemove", setPlayerPosition, false);
 
 function draw(){
     var x = player.x;
     var y = player.y;
-
+    
     myGameArea.context.drawImage(myGameArea.bookIcon, x-myGameArea.bookIcon.width/2, y, 60, 30);
+
 }
 
 function getMousePos(canvas, evt) {
@@ -68,4 +127,5 @@ function update(){
         draw();
     }
 }
+setInterval(animate.checkColl)
 setInterval(update, 10);
