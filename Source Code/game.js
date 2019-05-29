@@ -5,6 +5,7 @@ function startGame() {
 var hasStarted = 0;
 
 var canAnimate = false;
+var hotels = new Array();
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
@@ -22,9 +23,15 @@ var myGameArea = {
 
         this.bookIcon.src = "Yellow-page.png";
         draw();
-
-
+        initHotels();
     }
+}
+
+function initHotels(){
+    hotels[0] = new Image();
+    hotels[0].src = "Art/Icons/Hotels/FLORIS_logo.png";
+    hotels[1] = new Image();
+    hotels[1].src = "Art/Icons/Hotels/Dolphin.suites_logo.png";
 }
 
 function PlayGame(){
@@ -33,7 +40,6 @@ function PlayGame(){
         animate(); 
         canAnimate = true;
     }
-
 }
 
 var player = {
@@ -48,14 +54,20 @@ var spawnRateOfDescent = 4.50;
 var lastSpawn = -1;
 var objects = [];
 var startTime = Date.now();
+var categories = [];
 
 function spawnRandomObject() {
     var t;
-    if (Math.random() < 0.50) {
-        t = "red";
-    } else {
-        t = "blue";
-    }
+//    if (Math.random() < 0.50) {
+//        t = hotels[0];
+//    } else {
+//        t = "blue";
+//    }
+    var randomHotel = Math.floor(Math.random() * hotels.length);
+    console.log(randomHotel);
+    
+    var pattern = myGameArea.context.createPattern(hotels[0], "repeat");
+    t = pattern;
     var object = {
         type: t,
         x: Math.random() * (myGameArea.canvas.width - 30) + 15,
@@ -77,7 +89,8 @@ function animate() {
         var object = objects[i];
         object.y += spawnRateOfDescent;
         myGameArea.context.beginPath();
-        myGameArea.context.arc(object.x, object.y, 8, 0, Math.PI * 2);
+        //myGameArea.context.arc(object.x, object.y, 8, 0, Math.PI * 2);
+        myGameArea.context.rect(object.x, object.y, 50, 20);
         myGameArea.context.closePath();
         myGameArea.context.fillStyle = object.type;
         myGameArea.context.fill();
