@@ -6,6 +6,8 @@ var hasStarted = 0;
 
 var canAnimate = false;
 var hotels = new Array();
+var activities = new Array();
+var categories = new Array();
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
@@ -24,14 +26,42 @@ var myGameArea = {
         this.bookIcon.src = "Yellow-page.png";
         draw();
         initHotels();
+        initActivities();
     }
 }
 
 function initHotels(){
     hotels[0] = new Image();
-    hotels[0].src = "Art/Icons/Hotels/FLORIS_logo.png";
+    hotels[0].src = "Art/Icons/Hotels/hotels_woord.png";
     hotels[1] = new Image();
-    hotels[1].src = "Art/Icons/Hotels/Dolphin.suites_logo.png";
+    hotels[1].src = "Art/Icons/Hotels/FLORIS_logo.png";
+    hotels[2] = new Image();
+    hotels[2].src = "Art/Icons/Hotels/Dolphin.suites_logo.png";
+    hotels[3] = new Image();
+    hotels[3].src = "Art/Icons/Hotels/papagayotravel_logo.png";
+    hotels[4] = new Image();
+    hotels[4].src = "Art/Icons/Hotels/AVILA_logo.png";
+    hotels[5] = new Image();
+    hotels[5].src = "Art/Icons/Hotels/Amazonia_logo.png";
+
+    categories.push(hotels);
+}
+
+function initActivities(){
+    activities[0] = new Image();
+    activities[0].src = "Art/Icons/Activities/activities_woord.png";
+    activities[1] = new Image();
+    activities[1].src = "Art/Icons/Activities/kitebording.png";
+    activities[2] = new Image();
+    activities[2].src = "Art/Icons/Activities/Museum.png";
+    activities[3] = new Image();
+    activities[3].src = "Art/Icons/Activities/North_sea_jazz.png";
+    activities[4] = new Image();
+    activities[4].src = "Art/Icons/Activities/Sami_sail.png";
+    activities[5] = new Image();
+    activities[5].src = "Art/Icons/Activities/west_diving.png";
+
+    categories.push(activities);
 }
 
 function PlayGame(){
@@ -54,22 +84,13 @@ var spawnRateOfDescent = 4.50;
 var lastSpawn = -1;
 var objects = [];
 var startTime = Date.now();
-var categories = [];
 
 function spawnRandomObject() {
-    var t;
-//    if (Math.random() < 0.50) {
-//        t = hotels[0];
-//    } else {
-//        t = "blue";
-//    }
-    var randomHotel = Math.floor(Math.random() * hotels.length);
-    console.log(randomHotel);
-    
-    var pattern = myGameArea.context.createPattern(hotels[0], "repeat");
-    t = pattern;
+    var randCategory = Math.floor(Math.random() * categories.length);
+    var randomItem = Math.floor(Math.random() * (categories[randCategory].length - 1));
     var object = {
-        type: t,
+        image: categories[randCategory][0],
+        output: categories[randCategory][randomItem + 1],
         x: Math.random() * (myGameArea.canvas.width - 30) + 15,
         y: spawnLineY,
     }
@@ -83,23 +104,17 @@ function animate() {
         spawnRandomObject();
     }
     requestAnimationFrame(animate);
-    myGameArea.context.beginPath();
 
     for (var i = 0; i < objects.length; i++) {
         var object = objects[i];
         object.y += spawnRateOfDescent;
-        myGameArea.context.beginPath();
-        //myGameArea.context.arc(object.x, object.y, 8, 0, Math.PI * 2);
-        myGameArea.context.rect(object.x, object.y, 50, 20);
-        myGameArea.context.closePath();
-        myGameArea.context.fillStyle = object.type;
-        myGameArea.context.fill();
+        myGameArea.context.drawImage(object.image, object.x, object.y, 60, 60);
         if(object.y > 215 && object.y < 275){
-            if(object.x > player.x - 35 && object.x < player.x + 35){
-                //console.log("x is same as player");
-                objects.shift();
+            if(object.x > player.x - 90 && object.x < player.x + 35){
+                if(object.image = hotels[0]){
+                    object.image = object.output;
+                }
             }
-            //console.log("y is same as player");
         }
         else if(object.y > 400){
             objects.shift();
@@ -121,9 +136,8 @@ window.addEventListener("mousemove", setPlayerPosition, false);
 function draw(){
     var x = player.x;
     var y = player.y;
-    
-    myGameArea.context.drawImage(myGameArea.bookIcon, x-myGameArea.bookIcon.width/2, y, 60, 30);
 
+    myGameArea.context.drawImage(myGameArea.bookIcon, x-myGameArea.bookIcon.width/2, y, 60, 30);
 }
 
 function getMousePos(canvas, evt) {
