@@ -3,11 +3,16 @@ function startGame() {
 }
 
 var hasStarted = 0;
+var score = 0;
+var countdownTimer = 30;
+//MOET NOG WEL DE TIMER TOEVOEGEN BOII
+var hasGivenScore = false;
 
 var canAnimate = false;
 var hotels = new Array();
 var activities = new Array();
 var restaurants = new Array();
+var shopping = new Array();
 var categories = new Array();
 
 var myGameArea = {
@@ -29,6 +34,7 @@ var myGameArea = {
         initHotels();
         initActivities();
         initRestaurants();
+        initShopping();
     }
 }
 
@@ -83,6 +89,23 @@ function initRestaurants(){
     categories.push(restaurants);
 }
 
+function initShopping(){
+    shopping[0] = new Image();
+    shopping[0].src = "Art/Icons/Shopping/Shopping_woord.png";
+    shopping[1] = new Image();
+    shopping[1].src = "Art/Icons/Shopping/AlbertHeijn_logo.png";
+    shopping[2] = new Image();
+    shopping[2].src = "Art/Icons/Shopping/Ankateam_logo.png";
+    shopping[3] = new Image();
+    shopping[3].src = "Art/Icons/Shopping/Centrum_logo.png";
+    shopping[4] = new Image();
+    shopping[4].src = "Art/Icons/Shopping/Spar_logo.png";
+    shopping[5] = new Image();
+    shopping[5].src = "Art/Icons/Shopping/Vreugdenhil_logo.png";
+
+    categories.push(shopping);
+}
+
 function PlayGame(){
     if(canAnimate == false){
         hasStarted = 2;
@@ -110,10 +133,11 @@ function spawnRandomObject() {
     var object = {
         image: categories[randCategory][0],
         output: categories[randCategory][randomItem + 1],
-        x: Math.random() * (myGameArea.canvas.width - 30) + 15,
+        x: Math.random() * (myGameArea.canvas.width - 60),
         y: spawnLineY,
     }
     objects.push(object);
+    hasGivenScore = false;
 }
 
 function animate() {
@@ -130,6 +154,11 @@ function animate() {
         myGameArea.context.drawImage(object.image, object.x, object.y, 60, 60);
         if(object.y > 215 && object.y < 275){
             if(object.x > player.x - 90 && object.x < player.x + 35){
+                if(hasGivenScore == false){
+                    hasGivenScore = true;
+                    score += 1;
+                    console.log("Score: " + score);
+                }
                 if(object.image = hotels[0]){
                     object.image = object.output;
                 }
