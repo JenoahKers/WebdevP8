@@ -7,6 +7,7 @@ var hasStarted = 0;
 var canAnimate = false;
 var hotels = new Array();
 var activities = new Array();
+var restaurants = new Array();
 var categories = new Array();
 
 var myGameArea = {
@@ -23,10 +24,11 @@ var myGameArea = {
         }
         document.getElementById("advert").insertBefore(this.canvas, document.getElementById("advert").childNodes[0]);
 
-        this.bookIcon.src = "Yellow-page.png";
+        this.bookIcon.src = "Art/Yellow-page.png";
         draw();
         initHotels();
         initActivities();
+        initRestaurants();
     }
 }
 
@@ -62,6 +64,23 @@ function initActivities(){
     activities[5].src = "Art/Icons/Activities/west_diving.png";
 
     categories.push(activities);
+}
+
+function initRestaurants(){
+    restaurants[0] = new Image();
+    restaurants[0].src = "Art/Icons/Restaurants/Restaurants_woord.png";
+    restaurants[1] = new Image();
+    restaurants[1].src = "Art/Icons/Restaurants/Burgerking_logo.png";
+    restaurants[2] = new Image();
+    restaurants[2].src = "Art/Icons/Restaurants/Nemo_logo.png";
+    restaurants[3] = new Image();
+    restaurants[3].src = "Art/Icons/Restaurants/Restaurant_week_logo.png";
+    restaurants[4] = new Image();
+    restaurants[4].src = "Art/Icons/Restaurants/Subway_logo.png";
+    restaurants[5] = new Image();
+    restaurants[5].src = "Art/Icons/Restaurants/Tinto_logo.png";
+
+    categories.push(restaurants);
 }
 
 function PlayGame(){
