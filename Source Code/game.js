@@ -35,6 +35,8 @@ var myGameArea = {
         initActivities();
         initRestaurants();
         initShopping();
+        
+        drawScore();
     }
 }
 
@@ -168,7 +170,7 @@ function animate() {
             objects.shift();
         }
     }
-
+drawScore();
 }
 function setPlayerPosition(e) {
     if(hasStarted == 2){
@@ -186,6 +188,18 @@ function draw(){
     var y = player.y;
 
     myGameArea.context.drawImage(myGameArea.bookIcon, x-myGameArea.bookIcon.width/2, y, 60, 30);
+}
+
+function drawScore(){
+    var ScoreBG = new Image();
+    ScoreBG.src = "Art/sand_bar.jpg";
+    var scoreBGPat = myGameArea.context.createPattern(ScoreBG, "repeat");
+    myGameArea.context.fillStyle = scoreBGPat;
+    myGameArea.context.fillRect(0, myGameArea.canvas.height - 50, myGameArea.canvas.width, 50);
+    
+    myGameArea.context.fillStyle = "#ffffff";
+    myGameArea.context.font = "24px Arial";
+    myGameArea.context.fillText("Score: " + score, 10, myGameArea.canvas.height - 17);
 }
 
 function getMousePos(canvas, evt) {
