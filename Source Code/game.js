@@ -40,11 +40,12 @@ var myGameArea = {
         initShopping();
         initStores();
 
-        var bottomBar = new Image(50, 200);
-        bottomBar.src = "Art/Bottom_bar.png";
+        var startScreen = new Image(180, 380);
+        startScreen.src = "Art/StartScreen.png";
 
-        bottomBar.onload = function(){ myGameArea.context.drawImage(bottomBar, 0, myGameArea.canvas.height - 50, 200, 50);
-                                     }
+        startScreen.onload = function(){
+            myGameArea.context.drawImage(startScreen, 10, 10, 180, 380);
+        }
     }
 }
 
