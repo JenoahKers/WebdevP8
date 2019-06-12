@@ -5,7 +5,9 @@ function startGame() {
 var hasStarted = 0;
 var score = 0;
 var endScore = 5;
-var countdownTimer = 30;
+var countdownTimer = 10;
+var timePlaying = 0;
+var startTime = 0;
 //MOET NOG WEL DE TIMER TOEVOEGEN BOII
 var hasGivenScore = false;
 var canDrawScore = true;
@@ -138,7 +140,8 @@ function PlayGame(){
     if(canAnimate == false){
         hasStarted = 2;
         canAnimate = true;
-        animate(); 
+        animate();
+        startTime = timePlaying;
     }
 }
 
@@ -258,5 +261,18 @@ function endGame(){
 
     myGameArea.context.drawImage(winScreen, 10, 10, 180, 380);
 }
+function setPlayTime(){
+    timePlaying++;
+    if(hasStarted == 2){
+        if((startTime + countdownTimer) == timePlaying){
+            canAnimate = false;
+            canDrawScore = false; myGameArea.canvas.onmousedown = function(){ window.location = "https://www.yellowpages-curacao.com/"};
+            endGame();
+            objects = [];
+        } 
+    }
+    console.log("Current is: " + timePlaying + ", startTime is: " + startTime + " and countDownTime is: " + countdownTimer);
+}
 setInterval(animate.checkColl)
 setInterval(update, 10);
+setInterval(setPlayTime, 1000);
