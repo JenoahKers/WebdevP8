@@ -4,9 +4,11 @@ function startGame() {
 
 var hasStarted = 0;
 var score = 0;
+var endScore = 5;
 var countdownTimer = 30;
 //MOET NOG WEL DE TIMER TOEVOEGEN BOII
 var hasGivenScore = false;
+var canDrawScore = true;
 
 var canAnimate = false;
 var hotels = new Array();
@@ -35,7 +37,7 @@ var myGameArea = {
         initActivities();
         initRestaurants();
         initShopping();
-        
+
         drawScore();
     }
 }
@@ -111,8 +113,8 @@ function initShopping(){
 function PlayGame(){
     if(canAnimate == false){
         hasStarted = 2;
-        animate(); 
         canAnimate = true;
+        animate(); 
     }
 }
 
@@ -144,7 +146,7 @@ function spawnRandomObject() {
 
 function animate() {
     var time = Date.now();
-    if (time > (lastSpawn + spawnRate)) {
+    if (time > (lastSpawn + spawnRate) && canAnimate) {
         lastSpawn = time;
         spawnRandomObject();
     }
@@ -159,7 +161,11 @@ function animate() {
                 if(hasGivenScore == false){
                     hasGivenScore = true;
                     score += 1;
-                    console.log("Score: " + score);
+                    if(score >= endScore){
+                        canAnimate = false;
+                        canDrawScore = false; myGameArea.canvas.onmousedown = function(){ window.location = "https://www.yellowpages-curacao.com/"};
+                        endGame();
+                    }
                 }
                 if(object.image = hotels[0]){
                     object.image = object.output;
@@ -170,7 +176,7 @@ function animate() {
             objects.shift();
         }
     }
-drawScore();
+    drawScore();
 }
 function setPlayerPosition(e) {
     if(hasStarted == 2){
@@ -191,15 +197,17 @@ function draw(){
 }
 
 function drawScore(){
-    var ScoreBG = new Image();
-    ScoreBG.src = "Art/sand_bar.jpg";
-    var scoreBGPat = myGameArea.context.createPattern(ScoreBG, "repeat");
-    myGameArea.context.fillStyle = scoreBGPat;
-    myGameArea.context.fillRect(0, myGameArea.canvas.height - 50, myGameArea.canvas.width, 50);
-    
-    myGameArea.context.fillStyle = "#ffffff";
-    myGameArea.context.font = "24px Arial";
-    myGameArea.context.fillText("Score: " + score, 10, myGameArea.canvas.height - 17);
+    if(canDrawScore){
+        var ScoreBG = new Image();
+        ScoreBG.src = "Art/sand_bar.jpg";
+        var scoreBGPat = myGameArea.context.createPattern(ScoreBG, "repeat");
+        myGameArea.context.fillStyle = scoreBGPat;
+        myGameArea.context.fillRect(0, myGameArea.canvas.height - 50, myGameArea.canvas.width, 50);
+
+        myGameArea.context.fillStyle = "#ffffff";
+        myGameArea.context.font = "24px Arial";
+        myGameArea.context.fillText("Score: " + score, 10, myGameArea.canvas.height - 17);
+    }
 }
 
 function getMousePos(canvas, evt) {
@@ -214,7 +222,18 @@ function update(){
     if(hasStarted == 2){
         clearCanvas();
         draw();
+        if(!canAnimate){
+            endGame();
+        }
     }
+}
+
+function endGame(){
+    myGameArea.context.fillStyle = "#f1c40f";
+    myGameArea.context.fillRect(10, 10, myGameArea.canvas.width - 20, myGameArea.canvas.height - 20);
+
+    myGameArea.context.fillStyle = "#FFFFFF";
+    myGameArea.context.fillText("Continue", 50, myGameArea.canvas.height / 2);
 }
 setInterval(animate.checkColl)
 setInterval(update, 10);
