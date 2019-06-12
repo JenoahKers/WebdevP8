@@ -15,6 +15,7 @@ var hotels = new Array();
 var activities = new Array();
 var restaurants = new Array();
 var shopping = new Array();
+var stores = new Array();
 var categories = new Array();
 
 var myGameArea = {
@@ -37,8 +38,13 @@ var myGameArea = {
         initActivities();
         initRestaurants();
         initShopping();
+        initStores();
 
-        drawScore();
+        var bottomBar = new Image(50, 200);
+        bottomBar.src = "Art/Bottom_bar.png";
+
+        bottomBar.onload = function(){ myGameArea.context.drawImage(bottomBar, 0, myGameArea.canvas.height - 50, 200, 50);
+                                     }
     }
 }
 
@@ -110,6 +116,23 @@ function initShopping(){
     categories.push(shopping);
 }
 
+function initStores(){
+    stores[0] = new Image();
+    stores[0].src = "Art/Icons/Stores/Store_woord.png";
+    stores[1] = new Image();
+    stores[1].src = "Art/Icons/Stores/Dulce_logo.png";
+    stores[2] = new Image();
+    stores[2].src = "Art/Icons/Stores/Flair_logo.png";
+    stores[3] = new Image();
+    stores[3].src = "Art/Icons/Stores/Gift_logo.png";
+    stores[4] = new Image();
+    stores[4].src = "Art/Icons/Stores/Prosport_logo.png";
+    stores[5] = new Image();
+    stores[5].src = "Art/Icons/Stores/Sambil_logo.png";
+
+    categories.push(stores);
+}
+
 function PlayGame(){
     if(canAnimate == false){
         hasStarted = 2;
@@ -165,6 +188,7 @@ function animate() {
                         canAnimate = false;
                         canDrawScore = false; myGameArea.canvas.onmousedown = function(){ window.location = "https://www.yellowpages-curacao.com/"};
                         endGame();
+                        objects = [];
                     }
                 }
                 if(object.image = hotels[0]){
@@ -198,11 +222,10 @@ function draw(){
 
 function drawScore(){
     if(canDrawScore){
-        var ScoreBG = new Image();
-        ScoreBG.src = "Art/sand_bar.jpg";
-        var scoreBGPat = myGameArea.context.createPattern(ScoreBG, "repeat");
-        myGameArea.context.fillStyle = scoreBGPat;
-        myGameArea.context.fillRect(0, myGameArea.canvas.height - 50, myGameArea.canvas.width, 50);
+        var bottomBar = new Image(50, 200);
+        bottomBar.src = "Art/Bottom_bar.png";
+
+        myGameArea.context.drawImage(bottomBar, 0, myGameArea.canvas.height - 50, 200, 50);
 
         myGameArea.context.fillStyle = "#ffffff";
         myGameArea.context.font = "24px Arial";
@@ -229,11 +252,10 @@ function update(){
 }
 
 function endGame(){
-    myGameArea.context.fillStyle = "#f1c40f";
-    myGameArea.context.fillRect(10, 10, myGameArea.canvas.width - 20, myGameArea.canvas.height - 20);
+    var winScreen = new Image(180, 380);
+    winScreen.src = "Art/WinScreen.png";
 
-    myGameArea.context.fillStyle = "#FFFFFF";
-    myGameArea.context.fillText("Continue", 50, myGameArea.canvas.height / 2);
+    myGameArea.context.drawImage(winScreen, 10, 10, 180, 380);
 }
 setInterval(animate.checkColl)
 setInterval(update, 10);
