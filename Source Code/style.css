@@ -14,3 +14,6 @@ canvas:hover{
     width: 200px;
     margin: 0 auto;
 }
+.sky canvas{
+    background-image: url(Art/achtergrond%202.png);
+}

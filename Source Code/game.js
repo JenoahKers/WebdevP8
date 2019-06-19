@@ -22,7 +22,7 @@ var categories = new Array();
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
-    bookIcon: new Image(60, 30),
+    bookIcon: new Image(30, 20),
     start : function(){
         this.canvas.width = 200;
         this.canvas.height = 400;
@@ -30,7 +30,7 @@ var myGameArea = {
         this.canvas.onmousedown = function(){ PlayGame()};
         this.context = this.canvas.getContext("2d");
         myGameArea.bookIcon.onload = function(){
-            myGameArea.context.drawImage(myGameArea.bookIcon, player.x-myGameArea.bookIcon.width/2, player.y, 60, 30);
+            myGameArea.context.drawImage(myGameArea.bookIcon, player.x-myGameArea.bookIcon.width/2, player.y, 40, 20);
         }
         document.getElementById("advert").insertBefore(this.canvas, document.getElementById("advert").childNodes[0]);
 
@@ -184,7 +184,7 @@ function animate() {
         object.y += spawnRateOfDescent;
         myGameArea.context.drawImage(object.image, object.x, object.y, 60, 60);
         if(object.y > 215 && object.y < 275){
-            if(object.x > player.x - 90 && object.x < player.x + 35){
+            if(object.x > player.x - 70 && object.x < player.x + 35){
                 if(hasGivenScore == false){
                     hasGivenScore = true;
                     score += 1;
